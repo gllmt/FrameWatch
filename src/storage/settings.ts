@@ -60,13 +60,8 @@ export async function patchSettings(
   return next;
 }
 
-export function subscribeSettings(
-  callback: (settings: FrameWatchSettings) => void,
-): () => void {
-  const listener = (
-    changes: Record<string, unknown>,
-    areaName: string,
-  ) => {
+export function subscribeSettings(callback: (settings: FrameWatchSettings) => void): () => void {
+  const listener = (changes: Record<string, unknown>, areaName: string) => {
     if (areaName !== 'local') {
       return;
     }
@@ -77,7 +72,9 @@ export function subscribeSettings(
       return;
     }
 
-    getSettings().then(callback).catch(() => undefined);
+    getSettings()
+      .then(callback)
+      .catch(() => undefined);
   };
 
   browser.storage.onChanged.addListener(listener);

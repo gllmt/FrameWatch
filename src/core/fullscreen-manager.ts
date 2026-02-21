@@ -1,6 +1,8 @@
 function getPseudoFullscreenContainer(hostname: string): Element | null {
   if (hostname.includes('youtube.com') || hostname.includes('youtu.be')) {
-    return document.querySelector('#movie_player.ytp-fullscreen, .html5-video-player.ytp-fullscreen');
+    return document.querySelector(
+      '#movie_player.ytp-fullscreen, .html5-video-player.ytp-fullscreen',
+    );
   }
 
   if (hostname.includes('twitch.tv')) {

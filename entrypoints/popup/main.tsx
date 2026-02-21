@@ -5,7 +5,13 @@ import PopupApp from '@/src/popup/App';
 
 import './style.css';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error('FrameWatch popup root element not found');
+}
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <PopupApp />
   </React.StrictMode>,

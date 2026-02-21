@@ -43,9 +43,7 @@ const STATIC_MESSAGES: Record<SupportedLocale, Record<string, string>> = {
   fr: flattenMessages(frMessagesRaw as RawMessages),
 };
 
-export async function resolveLocale(
-  preference: LanguagePreference,
-): Promise<SupportedLocale> {
+export async function resolveLocale(preference: LanguagePreference): Promise<SupportedLocale> {
   if (preference === 'auto') {
     return normalizeLocale(browser.i18n.getUILanguage());
   }

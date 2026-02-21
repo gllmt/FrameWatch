@@ -17,10 +17,10 @@ import {
 import type { HudSnapshot, PopupStatus } from '@/src/shared/types';
 import {
   DEFAULT_SETTINGS,
+  type FrameWatchSettings,
   getSettings,
   patchSettings,
   subscribeSettings,
-  type FrameWatchSettings,
 } from '@/src/storage/settings';
 
 function getInitialSnapshot(): HudSnapshot {

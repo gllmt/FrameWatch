@@ -1,6 +1,6 @@
-import type { SiteAdapter } from '@/src/adapters/types';
 import { GenericAdapter } from '@/src/adapters/generic-adapter';
 import { TwitchAdapter } from '@/src/adapters/twitch-adapter';
+import type { SiteAdapter } from '@/src/adapters/types';
 import { YouTubeAdapter } from '@/src/adapters/youtube-adapter';
 
 const GENERIC_ADAPTER = new GenericAdapter();

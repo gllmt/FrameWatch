@@ -1,5 +1,5 @@
-import type { VideoDetectionSnapshot } from '@/src/core/video-detector';
 import type { SiteAdapter } from '@/src/adapters/types';
+import type { VideoDetectionSnapshot } from '@/src/core/video-detector';
 
 export class GenericAdapter implements SiteAdapter {
   readonly id = 'generic' as const;

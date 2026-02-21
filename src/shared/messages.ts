@@ -19,10 +19,7 @@ export interface ToggleHudMessage {
   type: typeof FRAMEWATCH_MESSAGE.TOGGLE_HUD;
 }
 
-export type FrameWatchIncomingMessage =
-  | GetStatusMessage
-  | SetHudEnabledMessage
-  | ToggleHudMessage;
+export type FrameWatchIncomingMessage = GetStatusMessage | SetHudEnabledMessage | ToggleHudMessage;
 
 export interface SetHudEnabledResponse {
   hudEnabled: boolean;

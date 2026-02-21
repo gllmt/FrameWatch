@@ -1,5 +1,5 @@
-import type { VideoDetectionSnapshot } from '@/src/core/video-detector';
 import type { SiteAdapter } from '@/src/adapters/types';
+import type { VideoDetectionSnapshot } from '@/src/core/video-detector';
 
 interface TwitchQualityItem {
   name?: string;
@@ -18,9 +18,7 @@ function isTwitchPlayerApi(value: unknown): value is TwitchPlayerApi {
   }
 
   const candidate = value as TwitchPlayerApi;
-  return (
-    typeof candidate.getQuality === 'function' || typeof candidate.getQualities === 'function'
-  );
+  return typeof candidate.getQuality === 'function' || typeof candidate.getQualities === 'function';
 }
 
 export class TwitchAdapter implements SiteAdapter {

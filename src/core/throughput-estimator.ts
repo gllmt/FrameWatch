@@ -94,9 +94,7 @@ export class ThroughputEstimator {
 
     const currentMbps = totalBits / totalDurationSeconds / 1_000_000;
     this.smoothedMbps =
-      this.smoothedMbps === null
-        ? currentMbps
-        : this.smoothedMbps * 0.78 + currentMbps * 0.22;
+      this.smoothedMbps === null ? currentMbps : this.smoothedMbps * 0.78 + currentMbps * 0.22;
 
     return this.smoothedMbps;
   }

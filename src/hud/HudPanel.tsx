@@ -112,7 +112,12 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
               <div className="flex items-center justify-between">
                 <dt className="text-hud-muted">{t('hudBuffer')}</dt>
                 <dd className="font-medium">
-                  {formatNullable(snapshot.metrics.bufferAhead, numberFormatter, na, ` ${t('unitSeconds')}`)}
+                  {formatNullable(
+                    snapshot.metrics.bufferAhead,
+                    numberFormatter,
+                    na,
+                    ` ${t('unitSeconds')}`,
+                  )}
                 </dd>
               </div>
             )}

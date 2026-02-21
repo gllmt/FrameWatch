@@ -54,9 +54,7 @@ function readFrameQuality(video: HTMLVideoElement): FrameQualitySnapshot {
         droppedFrames: Number.isFinite(quality.droppedVideoFrames)
           ? quality.droppedVideoFrames
           : null,
-        totalFrames: Number.isFinite(quality.totalVideoFrames)
-          ? quality.totalVideoFrames
-          : null,
+        totalFrames: Number.isFinite(quality.totalVideoFrames) ? quality.totalVideoFrames : null,
       };
     }
   } catch {
@@ -106,9 +104,7 @@ class FpsEstimator {
 
     if (estimatedFps !== null && Number.isFinite(estimatedFps) && estimatedFps > 0) {
       const smoothed =
-        state.smoothedFps === null
-          ? estimatedFps
-          : state.smoothedFps * 0.72 + estimatedFps * 0.28;
+        state.smoothedFps === null ? estimatedFps : state.smoothedFps * 0.72 + estimatedFps * 0.28;
       state.smoothedFps = smoothed;
       return smoothed;
     }

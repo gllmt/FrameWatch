@@ -49,7 +49,9 @@ function sortByArea(a: VideoCandidate, b: VideoCandidate): number {
 }
 
 function pickActiveVideo(candidates: VideoCandidate[]): HTMLVideoElement | null {
-  const playingVisible = candidates.filter((candidate) => candidate.isPlaying && candidate.isVisible);
+  const playingVisible = candidates.filter(
+    (candidate) => candidate.isPlaying && candidate.isVisible,
+  );
   if (playingVisible.length > 0) {
     playingVisible.sort(sortByArea);
     return playingVisible[0]?.element ?? null;
@@ -101,9 +103,7 @@ function collectVideosFromDocument(
         isVisible,
         isPlaying,
       });
-    } catch {
-      continue;
-    }
+    } catch {}
   }
 
   let inaccessibleIframeCount = 0;

@@ -3,11 +3,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { I18nRuntime } from '@/src/i18n/runtime';
 import {
   DEFAULT_SETTINGS,
-  getSettings,
-  patchSettings,
   type FrameWatchSettings,
+  getSettings,
   type HudPosition,
   type LanguagePreference,
+  patchSettings,
   type RefreshInterval,
 } from '@/src/storage/settings';
 
@@ -41,10 +41,7 @@ export default function OptionsApp() {
     };
   }, []);
 
-  const t = useMemo(
-    () => i18n?.t.bind(i18n) ?? ((key: string) => key),
-    [i18n],
-  );
+  const t = useMemo(() => i18n?.t.bind(i18n) ?? ((key: string) => key), [i18n]);
 
   const update = async (patch: Partial<FrameWatchSettings>) => {
     setSaving(true);

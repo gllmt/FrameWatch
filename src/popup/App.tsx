@@ -163,10 +163,7 @@ export default function PopupApp() {
     };
   }, []);
 
-  const t = useMemo(
-    () => i18n?.t.bind(i18n) ?? ((key: string) => key),
-    [i18n],
-  );
+  const t = useMemo(() => i18n?.t.bind(i18n) ?? ((key: string) => key), [i18n]);
 
   const onToggleHud = async (enabled: boolean) => {
     setState((prev) => ({ ...prev, hudEnabled: enabled }));

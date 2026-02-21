@@ -1,3 +1,9 @@
+/**
+ * FrameWatch
+ * Copyright (c) 2026 Pierre Guillemot
+ * Licensed under AGPL-3.0
+ */
+
 import { FrameWatchController } from '@/src/content/controller';
 
 export default defineContentScript({

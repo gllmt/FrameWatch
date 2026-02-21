@@ -1,3 +1,9 @@
+/**
+ * FrameWatch
+ * Copyright (c) 2026 Pierre Guillemot
+ * Licensed under AGPL-3.0
+ */
+
 import { useEffect, useMemo, useState } from 'react';
 
 import { I18nRuntime } from '@/src/i18n/runtime';

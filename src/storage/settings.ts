@@ -1,3 +1,9 @@
+/**
+ * FrameWatch
+ * Copyright (c) 2026 Pierre Guillemot
+ * Licensed under AGPL-3.0
+ */
+
 export type LanguagePreference = 'auto' | 'fr' | 'en';
 export type HudPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 export type RefreshInterval = 250 | 500 | 1000;

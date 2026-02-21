@@ -1,3 +1,9 @@
+/**
+ * FrameWatch
+ * Copyright (c) 2026 Pierre Guillemot
+ * Licensed under AGPL-3.0
+ */
+
 import { GenericAdapter } from '@/src/adapters/generic-adapter';
 import { TwitchAdapter } from '@/src/adapters/twitch-adapter';
 import type { SiteAdapter } from '@/src/adapters/types';

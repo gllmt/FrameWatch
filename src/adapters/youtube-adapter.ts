@@ -1,3 +1,9 @@
+/**
+ * FrameWatch
+ * Copyright (c) 2026 Pierre Guillemot
+ * Licensed under AGPL-3.0
+ */
+
 import type { SiteAdapter } from '@/src/adapters/types';
 import type { VideoDetectionSnapshot } from '@/src/core/video-detector';
 

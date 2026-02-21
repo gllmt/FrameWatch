@@ -1,3 +1,9 @@
+/**
+ * FrameWatch
+ * Copyright (c) 2026 Pierre Guillemot
+ * Licensed under AGPL-3.0
+ */
+
 import { useMemo } from 'react';
 
 import type { HudSnapshot } from '@/src/shared/types';

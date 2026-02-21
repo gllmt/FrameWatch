@@ -105,6 +105,10 @@ Les contributions sont les bienvenues.
 
 ## Licence
 
-FrameWatch est développé comme projet open source.
+FrameWatch est sous licence GNU Affero General Public License v3.0 (AGPL-3.0).
 
-Ce dépôt ne contient actuellement pas de fichier `LICENSE`, les conditions de réutilisation et de distribution ne sont donc pas encore définies.
+Vous êtes libre d'utiliser, modifier et redistribuer ce logiciel selon les termes de la licence AGPL-3.0.
+
+Si vous distribuez des versions modifiées ou utilisez ce logiciel dans le cadre d'un service accessible via un réseau, vous devez également mettre à disposition le code source correspondant sous la même licence.
+
+Consultez le fichier `LICENSE` pour tous les détails.

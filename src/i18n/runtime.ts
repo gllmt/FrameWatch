@@ -1,3 +1,9 @@
+/**
+ * FrameWatch
+ * Copyright (c) 2026 Pierre Guillemot
+ * Licensed under AGPL-3.0
+ */
+
 import enMessagesRaw from '@/public/_locales/en/messages.json';
 import frMessagesRaw from '@/public/_locales/fr/messages.json';
 import type { LanguagePreference } from '@/src/storage/settings';

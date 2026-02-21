@@ -1,3 +1,9 @@
+/**
+ * FrameWatch
+ * Copyright (c) 2026 Pierre Guillemot
+ * Licensed under AGPL-3.0
+ */
+
 import type { UniversalVideoMetrics } from '@/src/shared/types';
 
 interface FrameQualitySnapshot {

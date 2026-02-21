@@ -115,14 +115,13 @@ export default function PopupApp() {
     let alive = true;
 
     const load = async () => {
-      const settings = await getSettings();
+      const [settings, candidates] = await Promise.all([getSettings(), getCandidateTabs()]);
       const runtime = new I18nRuntime();
       await runtime.init(settings.language);
 
       let unsupported = false;
       let status: PopupStatus | null = null;
 
-      const candidates = await getCandidateTabs();
       for (const tab of candidates) {
         if (!tab.id || isRestrictedUrl(tab.url)) {
           continue;

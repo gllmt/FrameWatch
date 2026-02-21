@@ -1,7 +1,10 @@
 import { createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 
-import { GENERIC_ADAPTER, resolveAdapter } from '@/src/adapters';
+import { GenericAdapter } from '@/src/adapters/generic-adapter';
+import { TwitchAdapter } from '@/src/adapters/twitch-adapter';
+import type { SiteAdapter } from '@/src/adapters/types';
+import { YouTubeAdapter } from '@/src/adapters/youtube-adapter';
 import { FullscreenManager } from '@/src/core/fullscreen-manager';
 import { VideoMetricsCollector } from '@/src/core/metrics-collector';
 import { ThroughputEstimator } from '@/src/core/throughput-estimator';
@@ -22,6 +25,13 @@ import {
   patchSettings,
   subscribeSettings,
 } from '@/src/storage/settings';
+
+const GENERIC_ADAPTER = new GenericAdapter();
+const ADAPTERS: SiteAdapter[] = [new YouTubeAdapter(), new TwitchAdapter(), GENERIC_ADAPTER];
+
+function resolveAdapter(location: Location): SiteAdapter {
+  return ADAPTERS.find((adapter) => adapter.matches(location)) ?? GENERIC_ADAPTER;
+}
 
 function getInitialSnapshot(): HudSnapshot {
   return {

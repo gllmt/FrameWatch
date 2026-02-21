@@ -1,132 +1,110 @@
 # FrameWatch
 
-FrameWatch est une extension Chromium MV3 (WXT + React + TypeScript + Tailwind) qui affiche un HUD minimaliste en surimpression pour suivre la qualité vidéo en temps réel sur YouTube, Twitch et les lecteurs HTML5.
+FrameWatch is an open-source browser extension that shows a minimal in-page HUD with real-time video playback quality metrics.
 
-## Stack
+Built with WXT, React, TypeScript, and Tailwind CSS.
 
-- WXT (Vite-based)
-- Manifest V3
-- TypeScript
-- React
-- Tailwind CSS
-- HUD dans Shadow DOM (isolation CSS)
+## What It Is
 
-## Fonctionnalités
+FrameWatch overlays a compact HUD on top of HTML5 video players to help you inspect playback quality while watching.
 
-- Détection robuste des balises `<video>` (lecture active prioritaire, fallback par taille visible, mutation + SPA).
-- Collecte universelle des métriques HTML5 :
-  - résolution décodée,
-  - FPS estimé,
-  - dropped/total frames,
-  - buffer ahead,
-  - playbackRate,
-  - readyState/networkState (optionnel).
-- Estimation de débit observé via `PerformanceObserver` sur une fenêtre glissante.
-- Architecture adapter pluggable :
-  - `GenericAdapter` (fallback),
-  - `YouTubeAdapter`,
-  - `TwitchAdapter` (utilise API player si accessible, sinon fallback).
-- HUD in-page en Shadow DOM, visible en plein écran (re-parenting + pseudo-fullscreen YouTube/Twitch).
-- Popup : toggle HUD + site détecté + état vidéo + lien options.
-- Options persistées (`chrome.storage.local`) : langue, position HUD, lignes affichées, fréquence refresh, comportement fullscreen.
-- i18n FR/EN via `_locales/*/messages.json`.
+## Features
 
-## Arborescence
+- Robust active video detection for dynamic pages and SPA navigation.
+- Universal HTML5 metrics collection.
+- Throughput estimation from observed media network resources.
+- Adapter architecture with site-specific behavior and automatic fallback.
+- Shadow DOM HUD for strong CSS isolation.
+- Popup and options pages with persisted settings.
+- EN and FR localization.
 
-```text
-entrypoints/
-  background.ts
-  content.ts
-  popup/
-    index.html
-    main.tsx
-    style.css
-  options/
-    index.html
-    main.tsx
-    style.css
-src/
-  adapters/
-    generic-adapter.ts
-    twitch-adapter.ts
-    youtube-adapter.ts
-    index.ts
-    types.ts
-  core/
-    fullscreen-manager.ts
-    metrics-collector.ts
-    throughput-estimator.ts
-    video-detector.ts
-  content/
-    controller.tsx
-  hud/
-    HudPanel.tsx
-    hud.css
-  i18n/
-    runtime.ts
-  popup/
-    App.tsx
-  options/
-    App.tsx
-  shared/
-    messages.ts
-    types.ts
-  storage/
-    settings.ts
-public/
-  _locales/
-    en/messages.json
-    fr/messages.json
-  icon/
-wxt.config.ts
-tailwind.config.ts
-postcss.config.cjs
-```
+## Supported Sites
 
-## Développement
+- YouTube (adapter + generic fallback)
+- Twitch (adapter + generic fallback)
+- Generic HTML5 video sites
 
-Pré-requis : Node 18+ et pnpm.
+## Metrics Shown
+
+- Decoded resolution (`videoWidth x videoHeight`)
+- Estimated FPS
+- Dropped frames and total frames (when available)
+- Buffer ahead (seconds)
+- Playback rate
+- Ready state and network state (optional)
+- Observed bitrate estimate (Mbps), shows `N/A` when unavailable
+
+## Fullscreen Behavior
+
+- Standard fullscreen is supported via `fullscreenchange` handling.
+- The HUD is re-parented to the fullscreen element when needed.
+- Pseudo fullscreen containers on YouTube and Twitch are handled when detectable.
+
+## Install (Dev)
+
+Requirements:
+
+- Node.js 18+
+- pnpm
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Build production :
+## Build
 
 ```bash
 pnpm build
+pnpm build:firefox
 ```
 
-Type-check :
+## Load Unpacked (Chromium)
 
-```bash
-pnpm compile
+1. Run `pnpm build`.
+2. Open `chrome://extensions`.
+3. Enable Developer mode.
+4. Click Load unpacked.
+5. Select:
+
+```text
+.output/chrome-mv3
 ```
 
-## Charger l’extension unpacked (Chromium)
+## i18n (EN/FR)
 
-1. Lancer `pnpm build`.
-2. Ouvrir `chrome://extensions`.
-3. Activer `Mode développeur`.
-4. Cliquer `Load unpacked`.
-5. Sélectionner le dossier :
-   - `/Users/pierreguillemot/sites-perso/FrameWatch/.output/chrome-mv3`
+- Default language: English
+- Additional language: French (`README.fr.md` for docs)
+- Extension locales are in `public/_locales/en/messages.json` and `public/_locales/fr/messages.json`.
 
-## Raccourci clavier
+## Screenshot Placeholder
 
-- Commande : `toggle-hud`
-- Par défaut : `Alt+Shift+Q`
-- Modifiable via `chrome://extensions/shortcuts`
+Add real screenshots in `docs/screenshots/` (or another docs folder), then reference them here.
 
-## Limites connues
+Example:
 
-- YouTube : le label qualité dépend des surfaces DOM/API exposées ; si indisponible, rien n’est inventé.
-- Bitrate observé : dépend de `PerformanceResourceTiming` (cache, CORS/TAO, type de flux segmenté), peut rester en `N/A`.
-- Iframes cross-origin : non inspectables depuis la page parente ; elles sont détectées et ignorées proprement.
-- Twitch API : si l’API player n’est pas exposée au contexte page, fallback générique automatique.
+```md
+![FrameWatch HUD on YouTube](docs/screenshots/hud-youtube.png)
+```
 
-## Compatibilité
+## Roadmap
 
-- Cible actuelle : Chromium MV3 (macOS/Linux).
-- Architecture prête pour un port Firefox/Safari ultérieur.
+- Improve Twitch adapter precision when player APIs are exposed.
+- Add better handling for iframe-heavy pages.
+- Prepare cross-browser packaging workflow for Firefox and Safari.
+- Add lightweight automated QA checks.
+
+## Contributing
+
+Contributions are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Run `pnpm compile` and `pnpm build` before opening a PR.
+4. Open a pull request with a clear scope and test notes.
+
+## License
+
+FrameWatch is developed as an open-source project.
+
+This repository currently does not include a `LICENSE` file, so reuse and distribution terms are not defined yet.

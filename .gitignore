@@ -7,20 +7,37 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-.output
+# Dependencies
+node_modules/
+
+# Build and generated artifacts
+.output/
+.wxt/
+dist/
+coverage/
 stats.html
 stats-*.json
-.wxt
+*.tsbuildinfo
 web-ext.config.ts
+
+# Environment and local config
+.env
+.env.*
+!.env.example
+*.local
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+*.swp
+*.swo
 *.sw?
+
+# OS files
+.DS_Store
+Thumbs.db

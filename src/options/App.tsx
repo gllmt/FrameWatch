@@ -14,7 +14,6 @@ import {
 export default function OptionsApp() {
   const [i18n, setI18n] = useState<I18nRuntime | null>(null);
   const [settings, setSettings] = useState<FrameWatchSettings>(DEFAULT_SETTINGS);
-  const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -31,7 +30,6 @@ export default function OptionsApp() {
 
       setSettings(nextSettings);
       setI18n(runtime);
-      setLoaded(true);
     };
 
     void load();
@@ -57,7 +55,7 @@ export default function OptionsApp() {
     setSaving(false);
   };
 
-  if (!loaded) {
+  if (i18n === null) {
     return (
       <main className="min-h-screen bg-slate-100 p-8 text-slate-900">
         <p className="text-sm text-slate-600">{t('optionsLoading')}</p>

@@ -25,14 +25,14 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
-    "@types/react": "^19.2.13",
+    "@biomejs/biome": "^2.4.8",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@wxt-dev/module-react": "^1.1.5",
-    "autoprefixer": "^10.4.24",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17",
+    "@wxt-dev/module-react": "^1.2.2",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
-    "wxt": "^0.20.17"
+    "wxt": "^0.20.20"
   }
 }

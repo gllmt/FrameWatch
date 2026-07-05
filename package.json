@@ -1,10 +1,10 @@
 {
   "name": "framewatch",
-  "description": "FrameWatch Chromium extension",
+  "description": "Real-time video playback diagnostics browser extension",
   "private": true,
   "version": "0.1.0",
   "author": "Pierre Guillemot",
-  "license": "AGPL-3.0",
+  "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {
     "dev": "wxt",

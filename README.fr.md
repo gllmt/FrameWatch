@@ -1,114 +1,117 @@
 # FrameWatch
 
-FrameWatch est une extension de navigateur open source qui affiche un HUD minimaliste dans la page avec des métriques de qualité vidéo en temps réel.
+Extension de navigateur pour diagnostiquer la qualité de lecture vidéo en temps réel. FrameWatch ajoute un HUD compact dans la page sur YouTube, Twitch et les lecteurs HTML5 génériques pour inspecter la résolution, les FPS, les images perdues, le buffer, l'état de lecture et le débit observé sans quitter la vidéo.
 
-Construit avec WXT, React, TypeScript et Tailwind CSS.
-
-## Ce Que C'est
-
-FrameWatch superpose un HUD compact sur les lecteurs vidéo HTML5 pour inspecter la qualité de lecture pendant le visionnage.
+![WXT](https://img.shields.io/badge/WXT-111827?style=flat-square)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Licence : AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg?style=flat-square)
 
 ## Fonctionnalités
 
-- Détection robuste de la vidéo active sur les pages dynamiques et les navigations SPA.
-- Collecte universelle des métriques HTML5.
-- Estimation du débit à partir des ressources réseau média observées.
-- Architecture par adaptateurs avec comportement spécifique par site et fallback automatique.
-- HUD en Shadow DOM pour une isolation CSS forte.
-- Popup et page d'options avec réglages persistés.
-- Localisation EN et FR.
+- HUD injecté dans la page avec Shadow DOM pour une forte isolation CSS.
+- Détection de la vidéo active sur les pages dynamiques, les navigations SPA et les iframes accessibles.
+- Adaptateurs pour YouTube et Twitch, avec fallback HTML5 générique.
+- Métriques HTML5 : résolution décodée, FPS estimés, images perdues, images totales, buffer en avance, vitesse de lecture, ready state et network state.
+- Estimation du débit observé à partir des ressources média, affichée en `N/A` quand elle est indisponible.
+- Gestion du plein écran standard et des pseudo pleins écrans détectables.
+- Popup et page d'options avec réglages persistés dans le navigateur.
+- Raccourci clavier pour afficher ou masquer le HUD : `Alt+Shift+Q`.
+- Locales d'extension en anglais et français.
 
-## Sites Pris En Charge
+## Sites pris en charge
 
-- YouTube (adaptateur + fallback générique)
-- Twitch (adaptateur + fallback générique)
-- Sites génériques avec vidéo HTML5
+- YouTube.
+- Twitch.
+- Sites génériques avec vidéo HTML5.
 
-## Métriques Affichées
+YouTube et Twitch utilisent d'abord des adaptateurs spécifiques, puis le détecteur générique si nécessaire.
 
-- Résolution décodée (`videoWidth x videoHeight`)
-- FPS estimé
-- Frames perdues et frames totales (si disponibles)
-- Buffer en avance (secondes)
-- Vitesse de lecture
-- Ready state et network state (optionnel)
-- Estimation du débit observé (Mbps), affiche `N/A` si indisponible
+## Prérequis
 
-## Comportement En Plein Écran
+- Node.js compatible avec WXT et Vite : `^20.19.0` ou `>=22.12.0`.
+- pnpm.
+- Navigateur compatible Chromium pour le build par défaut.
+- Firefox pour la cible de build Firefox.
 
-- Le plein écran standard est pris en charge via `fullscreenchange`.
-- Le HUD est re-parenté dans l'élément plein écran si nécessaire.
-- Les conteneurs pseudo plein écran de YouTube et Twitch sont gérés quand ils sont détectables.
-
-## Installation (Dev)
-
-Prérequis:
-
-- Node.js 18+
-- pnpm
+## Démarrage
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
+WXT affiche la cible navigateur de développement et le dossier de sortie.
+
 ## Build
 
 ```bash
-pnpm build
-pnpm build:firefox
+pnpm build          # build Chromium MV3
+pnpm build:firefox  # build Firefox
+pnpm zip            # package Chromium
+pnpm zip:firefox    # package Firefox
 ```
 
-## Charger En Non Packé (Chromium)
+## Charger l'extension non packée
 
-1. Lancez `pnpm build`.
-2. Ouvrez `chrome://extensions`.
-3. Activez le mode développeur.
-4. Cliquez sur Load unpacked.
-5. Sélectionnez:
+Pour Chromium :
+
+```bash
+pnpm build
+```
+
+Ouvrez ensuite `chrome://extensions`, activez le mode développeur, cliquez sur "Load unpacked", puis sélectionnez :
 
 ```text
 .output/chrome-mv3
 ```
 
-## i18n (EN/FR)
+## Permissions et vie privée
 
-- Langue par défaut: anglais
-- Langue additionnelle: français (`README.fr.md` pour la documentation)
-- Les locales de l'extension sont dans `public/_locales/en/messages.json` et `public/_locales/fr/messages.json`.
+FrameWatch demande `storage`, `tabs` et `<all_urls>` parce que le content script doit détecter les vidéos sur des pages arbitraires et que la popup doit communiquer avec l'onglet actif.
 
-## Emplacement De Capture D'écran
+Les réglages sont stockés dans le stockage local de l'extension. FrameWatch n'inclut pas d'analytics, n'envoie pas les métriques collectées à un backend et ne persiste pas les métriques vidéo en dehors de l'interface de l'extension.
 
-Ajoutez de vraies captures dans `docs/screenshots/` (ou un autre dossier docs), puis référencez-les ici.
+## Commandes
 
-Exemple:
-
-```md
-![FrameWatch HUD on YouTube](docs/screenshots/hud-youtube.png)
+```bash
+pnpm dev          # mode développement WXT
+pnpm dev:firefox  # WXT pour Firefox
+pnpm build        # build Chromium
+pnpm build:firefox
+pnpm zip
+pnpm zip:firefox
+pnpm lint         # lint Biome
+pnpm check        # check Biome
+pnpm compile      # vérification TypeScript
+pnpm lints        # Biome check + lint + TypeScript
 ```
 
-## Roadmap
+## Structure du repo
 
-- Améliorer la précision de l'adaptateur Twitch quand les APIs player sont exposées.
-- Ajouter une meilleure gestion des pages avec beaucoup d'iframes.
-- Préparer le workflow de packaging cross-browser pour Firefox et Safari.
-- Ajouter des contrôles QA automatisés légers.
+- `entrypoints/` : entrypoints WXT background, content, popup et options.
+- `src/content/` : contrôleur du content script et montage du HUD.
+- `src/core/` : détection vidéo, collecte de métriques, estimation du débit et gestion du plein écran.
+- `src/adapters/` : adaptateurs YouTube, Twitch et générique.
+- `src/hud/` : UI React du HUD et styles isolés.
+- `src/popup/` et `src/options/` : surfaces UI de l'extension.
+- `src/storage/` : réglages persistés.
+- `public/_locales/` : messages i18n de l'extension en anglais et français.
 
-## Contribution
+## Limites
 
-Les contributions sont les bienvenues.
+- Les APIs navigateur exposent certaines métriques vidéo de façon inégale selon les sites et navigateurs.
+- Les iframes cross-origin peuvent bloquer l'inspection vidéo directe ; FrameWatch compte les iframes bloquées quand il ne peut pas y accéder.
+- Le débit observé est une estimation basée sur Resource Timing, pas une vérité fournie par le lecteur vidéo.
+- Le packaging Safari n'est pas documenté pour le moment.
 
-1. Forkez le dépôt.
-2. Créez une branche de fonctionnalité.
-3. Exécutez `pnpm compile` et `pnpm build` avant d'ouvrir une PR.
-4. Ouvrez une pull request avec un scope clair et des notes de test.
+## Documentation
+
+La documentation principale en anglais est disponible dans [README.md](./README.md).
 
 ## Licence
 
-FrameWatch est sous licence GNU Affero General Public License v3.0 (AGPL-3.0).
+Sous licence [GNU AGPL-3.0](LICENSE). Vous êtes libre de l'utiliser, de l'étudier, de le modifier et de le redistribuer. Tout fork distribué ou hébergé sur un réseau doit aussi être publié sous AGPL-3.0, afin de garder les dérivés ouverts.
 
-Vous êtes libre d'utiliser, modifier et redistribuer ce logiciel selon les termes de la licence AGPL-3.0.
-
-Si vous distribuez des versions modifiées ou utilisez ce logiciel dans le cadre d'un service accessible via un réseau, vous devez également mettre à disposition le code source correspondant sous la même licence.
-
-Consultez le fichier `LICENSE` pour tous les détails.
+© 2026 Pierre Guillemot

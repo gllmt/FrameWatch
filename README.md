@@ -1,114 +1,117 @@
 # FrameWatch
 
-FrameWatch is an open-source browser extension that shows a minimal in-page HUD with real-time video playback quality metrics.
+Browser extension for real-time video playback diagnostics. FrameWatch overlays a compact in-page HUD on YouTube, Twitch, and generic HTML5 video players so you can inspect resolution, FPS, dropped frames, buffering, playback state, and observed bitrate without leaving the page.
 
-Built with WXT, React, TypeScript, and Tailwind CSS.
-
-## What It Is
-
-FrameWatch overlays a compact HUD on top of HTML5 video players to help you inspect playback quality while watching.
+![WXT](https://img.shields.io/badge/WXT-111827?style=flat-square)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg?style=flat-square)
 
 ## Features
 
-- Robust active video detection for dynamic pages and SPA navigation.
-- Universal HTML5 metrics collection.
-- Throughput estimation from observed media network resources.
-- Adapter architecture with site-specific behavior and automatic fallback.
-- Shadow DOM HUD for strong CSS isolation.
-- Popup and options pages with persisted settings.
-- EN and FR localization.
+- In-page Shadow DOM HUD with strong CSS isolation.
+- Active video detection across dynamic pages, SPA navigation, and visible iframe depth.
+- Site adapters for YouTube and Twitch, with a generic HTML5 fallback.
+- Universal HTML5 metrics: decoded resolution, estimated FPS, dropped frames, total frames, buffer ahead, playback rate, ready state, and network state.
+- Observed bitrate estimate from media network resources, shown as `N/A` when unavailable.
+- Standard fullscreen and detectable pseudo-fullscreen handling.
+- Popup and options pages with persisted browser storage settings.
+- Keyboard command to toggle the HUD: `Alt+Shift+Q`.
+- English and French extension locales.
 
 ## Supported Sites
 
-- YouTube (adapter + generic fallback)
-- Twitch (adapter + generic fallback)
-- Generic HTML5 video sites
+- YouTube.
+- Twitch.
+- Generic HTML5 video sites.
 
-## Metrics Shown
+YouTube and Twitch use site-specific adapters first, then fall back to the generic detector when needed.
 
-- Decoded resolution (`videoWidth x videoHeight`)
-- Estimated FPS
-- Dropped frames and total frames (when available)
-- Buffer ahead (seconds)
-- Playback rate
-- Ready state and network state (optional)
-- Observed bitrate estimate (Mbps), shows `N/A` when unavailable
+## Requirements
 
-## Fullscreen Behavior
+- Node.js compatible with WXT and Vite: `^20.19.0` or `>=22.12.0`.
+- pnpm.
+- Chromium-compatible browser for the default build.
+- Firefox for the Firefox build target.
 
-- Standard fullscreen is supported via `fullscreenchange` handling.
-- The HUD is re-parented to the fullscreen element when needed.
-- Pseudo fullscreen containers on YouTube and Twitch are handled when detectable.
-
-## Install (Dev)
-
-Requirements:
-
-- Node.js 18+
-- pnpm
+## Getting Started
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
+WXT prints the development browser target and output directory.
+
 ## Build
 
 ```bash
-pnpm build
-pnpm build:firefox
+pnpm build          # Chromium MV3 build
+pnpm build:firefox  # Firefox build
+pnpm zip            # package Chromium build
+pnpm zip:firefox    # package Firefox build
 ```
 
-## Load Unpacked (Chromium)
+## Load Unpacked
 
-1. Run `pnpm build`.
-2. Open `chrome://extensions`.
-3. Enable Developer mode.
-4. Click Load unpacked.
-5. Select:
+For Chromium:
+
+```bash
+pnpm build
+```
+
+Then open `chrome://extensions`, enable Developer mode, click "Load unpacked", and select:
 
 ```text
 .output/chrome-mv3
 ```
 
-## i18n (EN/FR)
+## Permissions & Privacy
 
-- Default language: English
-- Additional language: French (`README.fr.md` for docs)
-- Extension locales are in `public/_locales/en/messages.json` and `public/_locales/fr/messages.json`.
+FrameWatch requests `storage`, `tabs`, and `<all_urls>` because the content script needs to detect videos on arbitrary pages and the popup needs to communicate with the active tab.
 
-## Screenshot Placeholder
+Settings are stored in browser local extension storage. FrameWatch does not include analytics, does not send collected metrics to a backend, and does not persist video metrics outside the extension UI.
 
-Add real screenshots in `docs/screenshots/` (or another docs folder), then reference them here.
+## Commands
 
-Example:
-
-```md
-![FrameWatch HUD on YouTube](docs/screenshots/hud-youtube.png)
+```bash
+pnpm dev          # run WXT development mode
+pnpm dev:firefox  # run WXT for Firefox
+pnpm build        # build Chromium extension
+pnpm build:firefox
+pnpm zip
+pnpm zip:firefox
+pnpm lint         # Biome lint
+pnpm check        # Biome check
+pnpm compile      # TypeScript check
+pnpm lints        # Biome check + lint + TypeScript check
 ```
 
-## Roadmap
+## Repository Layout
 
-- Improve Twitch adapter precision when player APIs are exposed.
-- Add better handling for iframe-heavy pages.
-- Prepare cross-browser packaging workflow for Firefox and Safari.
-- Add lightweight automated QA checks.
+- `entrypoints/`: WXT background, content, popup, and options entrypoints.
+- `src/content/`: content-script controller and HUD mounting.
+- `src/core/`: video detection, metric collection, throughput estimation, and fullscreen handling.
+- `src/adapters/`: YouTube, Twitch, and generic site adapters.
+- `src/hud/`: React HUD UI and isolated styles.
+- `src/popup/` and `src/options/`: extension UI surfaces.
+- `src/storage/`: persisted settings.
+- `public/_locales/`: Chrome extension i18n messages in English and French.
 
-## Contributing
+## Limits
 
-Contributions are welcome.
+- Browser APIs expose some video metrics inconsistently by site and browser.
+- Cross-origin iframes can block direct video inspection; FrameWatch counts blocked iframes when detection cannot enter them.
+- Observed bitrate is an estimate from media resource timing, not a player-provided ground truth.
+- Safari packaging is not currently documented.
 
-1. Fork the repository.
-2. Create a feature branch.
-3. Run `pnpm compile` and `pnpm build` before opening a PR.
-4. Open a pull request with a clear scope and test notes.
+## Documentation
+
+French documentation is available in [README.fr.md](./README.fr.md).
 
 ## License
 
-FrameWatch is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+Licensed under the [GNU AGPL-3.0](LICENSE). You are free to use, study, modify, and redistribute it. Any distributed or network-hosted fork must also be released under the AGPL-3.0, which keeps derivatives open.
 
-You are free to use, modify, and redistribute this software under the terms of the AGPL-3.0 license.
-
-If you distribute modified versions or use this software as part of a network-accessible service, you must also make the corresponding source code available under the same license.
-
-See the `LICENSE` file for full details.
+© 2026 Pierre Guillemot

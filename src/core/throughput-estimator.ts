@@ -132,7 +132,7 @@ export class ThroughputEstimator {
 
   private pruneOldSamples(): void {
     const cutoff = performance.now() - this.windowMs;
-    while (this.samples.length > 0 && this.samples[0].timestamp < cutoff) {
+    while ((this.samples[0]?.timestamp ?? Number.POSITIVE_INFINITY) < cutoff) {
       this.samples.shift();
     }
   }

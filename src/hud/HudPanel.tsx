@@ -57,11 +57,11 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
 
   return (
     <div className={rootClasses}>
-      <section className="pointer-events-auto w-72 rounded-2xl border border-white/20 bg-hud-bg text-white shadow-hud backdrop-blur-xl">
-        <header className="flex items-center justify-between border-b border-white/10 px-3 py-2">
+      <section className="fw-hud-card">
+        <header className="flex items-center justify-between border-b border-white/20 px-3 py-2">
           <h1 className="text-[13px] font-semibold tracking-wide">{t('hudTitle')}</h1>
           <div className="flex items-center gap-2">
-            <div className="text-[11px] text-hud-muted">
+            <div className="fw-hud-muted text-[11px]">
               {t(snapshot.siteLabelKey)}
               {snapshot.qualityLabel ? ` · ${snapshot.qualityLabel}` : ''}
             </div>
@@ -70,7 +70,7 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
               onClick={onClose}
               aria-label={t('hudClose')}
               title={t('hudClose')}
-              className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/20 text-[11px] leading-none text-slate-100 transition hover:bg-white/10"
+              className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/25 text-[11px] leading-none text-white transition hover:bg-white/15"
             >
               ×
             </button>
@@ -78,11 +78,11 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
         </header>
 
         {!snapshot.hasVideo || !snapshot.metrics ? (
-          <div className="px-3 py-3 text-[12px] text-slate-100">{t('hudNoVideo')}</div>
+          <div className="px-3 py-3 text-[12px] text-white">{t('hudNoVideo')}</div>
         ) : (
           <dl className="space-y-1 px-3 py-2 text-[12px]">
             <div className="flex items-center justify-between">
-              <dt className="text-hud-muted">{t('hudResolution')}</dt>
+              <dt className="fw-hud-muted">{t('hudResolution')}</dt>
               <dd className="font-medium">
                 {snapshot.metrics.resolution
                   ? `${snapshot.metrics.resolution.width}×${snapshot.metrics.resolution.height}`
@@ -91,7 +91,7 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
             </div>
 
             <div className="flex items-center justify-between">
-              <dt className="text-hud-muted">{t('hudFps')}</dt>
+              <dt className="fw-hud-muted">{t('hudFps')}</dt>
               <dd className="font-medium">
                 {formatNullable(snapshot.metrics.fps, numberFormatter, na, ` ${t('unitFps')}`)}
               </dd>
@@ -100,13 +100,13 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
             {settings.showFrames && (
               <>
                 <div className="flex items-center justify-between">
-                  <dt className="text-hud-muted">{t('hudDropped')}</dt>
+                  <dt className="fw-hud-muted">{t('hudDropped')}</dt>
                   <dd className="font-medium">
                     {formatNullable(snapshot.metrics.droppedFrames, frameFormatter, na)}
                   </dd>
                 </div>
                 <div className="flex items-center justify-between">
-                  <dt className="text-hud-muted">{t('hudTotal')}</dt>
+                  <dt className="fw-hud-muted">{t('hudTotal')}</dt>
                   <dd className="font-medium">
                     {formatNullable(snapshot.metrics.totalFrames, frameFormatter, na)}
                   </dd>
@@ -116,7 +116,7 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
 
             {settings.showBuffer && (
               <div className="flex items-center justify-between">
-                <dt className="text-hud-muted">{t('hudBuffer')}</dt>
+                <dt className="fw-hud-muted">{t('hudBuffer')}</dt>
                 <dd className="font-medium">
                   {formatNullable(
                     snapshot.metrics.bufferAhead,
@@ -130,7 +130,7 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
 
             {settings.showBitrate && (
               <div className="flex items-center justify-between">
-                <dt className="text-hud-muted">{t('hudBitrate')}</dt>
+                <dt className="fw-hud-muted">{t('hudBitrate')}</dt>
                 <dd className="font-medium">
                   {formatNullable(snapshot.bitrateMbps, numberFormatter, na, ` ${t('unitMbps')}`)}
                 </dd>
@@ -138,7 +138,7 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
             )}
 
             <div className="flex items-center justify-between">
-              <dt className="text-hud-muted">{t('hudPlaybackRate')}</dt>
+              <dt className="fw-hud-muted">{t('hudPlaybackRate')}</dt>
               <dd className="font-medium">
                 {formatNullable(snapshot.metrics.playbackRate, numberFormatter, na)}
               </dd>
@@ -147,11 +147,11 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
             {settings.showStates && (
               <>
                 <div className="flex items-center justify-between">
-                  <dt className="text-hud-muted">{t('hudReadyState')}</dt>
+                  <dt className="fw-hud-muted">{t('hudReadyState')}</dt>
                   <dd className="font-medium">{snapshot.metrics.readyState}</dd>
                 </div>
                 <div className="flex items-center justify-between">
-                  <dt className="text-hud-muted">{t('hudNetworkState')}</dt>
+                  <dt className="fw-hud-muted">{t('hudNetworkState')}</dt>
                   <dd className="font-medium">{snapshot.metrics.networkState}</dd>
                 </div>
               </>
@@ -160,7 +160,7 @@ export function HudPanel({ visible, settings, snapshot, locale, t, onClose }: Hu
         )}
 
         {snapshot.inaccessibleIframeCount > 0 && (
-          <footer className="border-t border-white/10 px-3 py-2 text-[10px] text-hud-muted">
+          <footer className="fw-hud-muted border-t border-white/20 px-3 py-2 text-[10px]">
             {t('hudIframesBlocked', snapshot.inaccessibleIframeCount)}
           </footer>
         )}

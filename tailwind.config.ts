@@ -21,13 +21,13 @@ const config: Config = {
         ],
       },
       boxShadow: {
-        hud: '0 10px 35px rgba(15, 23, 42, 0.35)',
+        hud: '0 12px 40px rgba(0, 0, 0, 0.42)',
       },
       colors: {
         hud: {
-          bg: 'rgba(15, 23, 42, 0.78)',
-          border: 'rgba(255, 255, 255, 0.20)',
-          muted: 'rgba(226, 232, 240, 0.7)',
+          bg: 'rgba(8, 12, 24, 0.42)',
+          border: 'rgba(255, 255, 255, 0.28)',
+          muted: 'rgba(248, 250, 252, 0.82)',
         },
       },
     },

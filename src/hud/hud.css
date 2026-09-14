@@ -1,9 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 :host {
-  all: initial;
+  color: #f8fafc;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 :host,
@@ -11,4 +12,30 @@
   box-sizing: border-box;
   font-family:
     "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.fw-hud-card {
+  pointer-events: auto;
+  width: 18rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  color: #f8fafc;
+  background: rgba(8, 12, 24, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
+}
+
+@supports ((-webkit-backdrop-filter: blur(16px)) or (backdrop-filter: blur(16px))) {
+  .fw-hud-card {
+    background: rgba(8, 12, 24, 0.42);
+    -webkit-backdrop-filter: blur(20px) saturate(165%);
+    backdrop-filter: blur(20px) saturate(165%);
+  }
+}
+
+.fw-hud-muted {
+  color: rgba(248, 250, 252, 0.82);
 }
